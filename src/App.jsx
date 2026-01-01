@@ -45,7 +45,8 @@ function PublicLayout() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    // ✅ This is the key fix for GitHub Pages + Vite
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         {/* ADMIN */}
         <Route path="/admin/login" element={<Login />} />
@@ -64,7 +65,7 @@ export default function App() {
           <Route path="delivery" element={<DeliveryAdmin />} />
           <Route path="portfolio" element={<PortfolioAdmin />} />
           <Route path="reviews" element={<ReviewsAdmin />} />
-          <Route path="settings" element={<SettingsAdmin />} /> {/* ✅ NEW */}
+          <Route path="settings" element={<SettingsAdmin />} />
         </Route>
 
         {/* PUBLIC (everything else) */}
