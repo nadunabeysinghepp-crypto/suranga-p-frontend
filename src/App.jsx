@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -29,7 +29,7 @@ function PublicLayout() {
       <Navbar />
       <main className="flex-1">
         <Routes>
-          {/* 🔹 AUTO REDIRECT ROOT TO HOME */}
+          {/* ✅ Root goes to /home */}
           <Route path="/" element={<Navigate to="/home" replace />} />
 
           <Route path="/home" element={<Home />} />
@@ -39,7 +39,6 @@ function PublicLayout() {
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact />} />
 
-          {/* 🔹 Only show 404 for truly wrong URLs */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -50,31 +49,29 @@ function PublicLayout() {
 
 export default function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <Routes>
-        {/* ADMIN */}
-        <Route path="/admin/login" element={<Login />} />
+    <Routes>
+      {/* ADMIN */}
+      <Route path="/admin/login" element={<Login />} />
 
-        <Route
-          path="/admin"
-          element={
-            <RequireAdmin>
-              <AdminLayout />
-            </RequireAdmin>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="quotes" element={<QuotesAdmin />} />
-          <Route path="services" element={<ServicesAdmin />} />
-          <Route path="delivery" element={<DeliveryAdmin />} />
-          <Route path="portfolio" element={<PortfolioAdmin />} />
-          <Route path="reviews" element={<ReviewsAdmin />} />
-          <Route path="settings" element={<SettingsAdmin />} />
-        </Route>
+      <Route
+        path="/admin"
+        element={
+          <RequireAdmin>
+            <AdminLayout />
+          </RequireAdmin>
+        }
+      >
+        <Route index element={<Dashboard />} />
+        <Route path="quotes" element={<QuotesAdmin />} />
+        <Route path="services" element={<ServicesAdmin />} />
+        <Route path="delivery" element={<DeliveryAdmin />} />
+        <Route path="portfolio" element={<PortfolioAdmin />} />
+        <Route path="reviews" element={<ReviewsAdmin />} />
+        <Route path="settings" element={<SettingsAdmin />} />
+      </Route>
 
-        {/* PUBLIC */}
-        <Route path="/*" element={<PublicLayout />} />
-      </Routes>
-    </BrowserRouter>
+      {/* PUBLIC */}
+      <Route path="/*" element={<PublicLayout />} />
+    </Routes>
   );
 }
