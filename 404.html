@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <title>Redirecting...</title>
     <script>
-      // GitHub Pages SPA redirect
-      var path = window.location.pathname;
       var base = "/suranga-p-frontend/";
+      var path = window.location.pathname;
+
+      // remove base from the current path and send as query ?p=
       if (path.startsWith(base)) {
         var route = path.slice(base.length);
         window.location.replace(base + "?p=" + encodeURIComponent(route) + window.location.hash);
