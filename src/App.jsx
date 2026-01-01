@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -29,10 +29,9 @@ function PublicLayout() {
       <Navbar />
       <main className="flex-1">
         <Routes>
-          {/* ✅ Root goes to /home */}
-          <Route path="/" element={<Navigate to="/home" replace />} />
+          {/* ✅ Home loads instantly */}
+          <Route path="/" element={<Home />} />
 
-          <Route path="/home" element={<Home />} />
           <Route path="/services" element={<Services />} />
           <Route path="/quote" element={<Quote />} />
           <Route path="/portfolio" element={<Portfolio />} />
