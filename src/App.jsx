@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -21,7 +21,7 @@ import ServicesAdmin from "./admin/ServicesAdmin";
 import DeliveryAdmin from "./admin/DeliveryAdmin";
 import PortfolioAdmin from "./admin/PortfolioAdmin";
 import ReviewsAdmin from "./admin/ReviewsAdmin";
-import SettingsAdmin from "./admin/SettingsAdmin"; // ✅ NEW
+import SettingsAdmin from "./admin/SettingsAdmin";
 
 function PublicLayout() {
   return (
@@ -29,12 +29,17 @@ function PublicLayout() {
       <Navbar />
       <main className="flex-1">
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* 🔹 AUTO REDIRECT ROOT TO HOME */}
+          <Route path="/" element={<Navigate to="/home" replace />} />
+
+          <Route path="/home" element={<Home />} />
           <Route path="/services" element={<Services />} />
           <Route path="/quote" element={<Quote />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact />} />
+
+          {/* 🔹 Only show 404 for truly wrong URLs */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -45,7 +50,6 @@ function PublicLayout() {
 
 export default function App() {
   return (
-    // ✅ This is the key fix for GitHub Pages + Vite
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         {/* ADMIN */}
@@ -68,7 +72,7 @@ export default function App() {
           <Route path="settings" element={<SettingsAdmin />} />
         </Route>
 
-        {/* PUBLIC (everything else) */}
+        {/* PUBLIC */}
         <Route path="/*" element={<PublicLayout />} />
       </Routes>
     </BrowserRouter>
